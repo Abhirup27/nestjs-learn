@@ -1,8 +1,8 @@
 ##GET
 
-GET http://localhost:3000/users/abhriup
+GET http://localhost:3000/users/123
 ?limit=20
-&offset=2
+&page=2
 
 
 ##POST
@@ -10,9 +10,9 @@ GET http://localhost:3000/users/abhriup
 POST http://localhost:3000/users
 Content-Type:application/json
 {
-    "fname": "John",
-    "lastname": "Doe",
+    "fName": "John",
+    "lName": "Doe",
     "email": "john@doe.com",
-    "passwd": "passwd"
+    "passwd": "ABHIshek@097"
 
 }
