@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Delete, Put, Patch, Param, Query, Body, Req, Headers, Ip, ParseIntPipe,DefaultValuePipe, ValidationPipe } from "@nestjs/common"
 import { CreateUserDto } from "./dtos/create-user.dto";
 import { GetUsersParamDto } from "./dtos/get-users-params.dto";
+import { PatchUserDto } from "./dtos/patch-user.dto";
 
     // type p={
     //     id: number
@@ -34,5 +35,11 @@ export class UsersController {
         console.log(headers);
         console.log(ip);
         return 'sent a POST request to /users endpoint to create an user.';
+    }
+
+    @Patch()
+    public patchUser(@Body() patchUserDto: PatchUserDto)
+    {
+        return patchUserDto;
     }
 }

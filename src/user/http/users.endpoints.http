@@ -15,3 +15,10 @@ Content-Type:application/json
     "email": "john@doe.com",
     "passwd": "ABHIshek@097"
 }
+
+PATCH http://localhost:3000/users
+Content-Type:application/json
+{
+    "email": "john",
+    "passwd": "ABHIshek@0301"
+}
