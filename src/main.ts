@@ -15,4 +15,23 @@ async function bootstrap() {
 
 }
 bootstrap();
+// class User {
 
+//   constructor()
+//   {
+//     console.log('User created');
+
+//   }
+//   public first = 'j';
+// }
+
+// class Post {
+//   constructor(private u:User)
+//   {
+//     console.log('Post created');
+//     u.first = 'a';
+//   }
+// }
+
+// const user = new User();
+// const post = new Post(user);
