@@ -2,24 +2,28 @@ import { Controller, Get, Post, Delete, Put, Patch, Param, Query, Body, Req, Hea
 import { CreateUserDto } from "./dtos/create-user.dto";
 import { GetUsersParamDto } from "./dtos/get-users-params.dto";
 import { PatchUserDto } from "./dtos/patch-user.dto";
-
+import { UsersService,user } from "./providers/user.service";
     // type p={
     //     id: number
-    // };
+// };
+    
+
 @Controller('users')
 export class UsersController { 
+    constructor(
+        private readonly usersService: UsersService,
+    
+    ){ }
 
 
     @Get('/:id?') //'/:id?/:option?'
     public getUsers(@Param() getUserParamDto: GetUsersParamDto, //@Param('id', ParseIntPipe) id: number | undefined
         @Query('limit',new DefaultValuePipe(10), ParseIntPipe) limit: number,
         @Query('page',new DefaultValuePipe(1), ParseIntPipe) page : number
-    ): string
+    ): user[]
     {
-        console.log(getUserParamDto);
-        console.log(typeof getUserParamDto);
-        console.log(limit);console.log(page);
-        return 'Sent a get request to /users endpoint';
+
+        return this.usersService.findAll(getUserParamDto, limit, page);
     }
 
     @Post()
