@@ -12,27 +12,26 @@ export class UsersService {
     public findAll(
         getUserParamDto: GetUsersParamDto,
         limit: number,
-        page:number,
-    ) {
-        
+        page: number,
+    ): user[] {
+
         return [
             {
                 fName: "John",
                 email: 'john@doe.com',
             },
-              {
+            {
                 fName: "Jane",
                 email: 'jane@doe.com',
             },
         ]
     }
 
-    public findOneById(id: number)
-    {
+    public findOneById(id: number): user {
         return {
-                id:1234,
-                fName: "Jane",
-                email: 'jane@doe.com',
-            }
+            id: 1234,
+            fName: "Jane",
+            email: 'jane@doe.com',
+        }
     }
 }
