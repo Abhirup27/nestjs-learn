@@ -2,9 +2,10 @@ import { Controller, Get, Post, Delete, Put, Patch, Param, Query, Body, Req, Hea
 import { CreatePostDto } from "./dtos/create-post.dto";
 import { PostsService } from "./providers/post.service";
 import { GetPostsParamsDto } from "./dtos/get-posts-params.dto";
-
+import { ApiTags } from "@nestjs/swagger";
 
 @Controller('posts')
+@ApiTags('Posts')
 export class PostsController {
     constructor(
         private readonly postsService: PostsService

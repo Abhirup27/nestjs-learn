@@ -2,13 +2,15 @@ import { Controller, Get, Post, Delete, Put, Patch, Param, Query, Body, Req, Hea
 import { CreateUserDto } from "./dtos/create-user.dto";
 import { GetUsersParamDto } from "./dtos/get-users-params.dto";
 import { PatchUserDto } from "./dtos/patch-user.dto";
-import { UsersService,user } from "./providers/user.service";
+import { UsersService, user } from "./providers/user.service";
+import { ApiTags } from "@nestjs/swagger";
     // type p={
     //     id: number
 // };
     
 
 @Controller('users')
+@ApiTags('Users')
 export class UsersController { 
     constructor(
         private readonly usersService: UsersService,
