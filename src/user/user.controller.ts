@@ -3,7 +3,7 @@ import { CreateUserDto } from "./dtos/create-user.dto";
 import { GetUsersParamDto } from "./dtos/get-users-params.dto";
 import { PatchUserDto } from "./dtos/patch-user.dto";
 import { UsersService, user } from "./providers/user.service";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
     // type p={
     //     id: number
 // };
@@ -19,6 +19,29 @@ export class UsersController {
 
 
     @Get('/:id?') //'/:id?/:option?'
+    @ApiOperation({
+            summary: "Fetches a list of registered users in the application."
+    })
+    @ApiResponse(
+        {
+            status: 200,
+            description: " Users fetched successfully based on the query."
+        }
+    )
+    @ApiQuery({
+        name: 'limit',
+        type: 'number',
+        required: false,
+        description: 'The number of entries returned per query.',
+        example: 10
+    })
+           @ApiQuery({
+        name: 'page',
+        type: 'number',
+        required: false,
+        description: 'The postition of the page number that you want the API to return.',
+        example: 1
+    })
     public getUsers(@Param() getUserParamDto: GetUsersParamDto, //@Param('id', ParseIntPipe) id: number | undefined
         @Query('limit',new DefaultValuePipe(10), ParseIntPipe) limit: number,
         @Query('page',new DefaultValuePipe(1), ParseIntPipe) page : number
