@@ -1,8 +1,8 @@
-import { IsArray, isArray, IsDate, IsEnum, isNotEmpty, IsNotEmpty, IsNotEmptyObject, IsObject, IsOptional, IsString, MaxLength, MinLength, matches, Matches, IsJSON, IsUrl, IsISO8601 } from "class-validator";
-import { Type } from "class-transformer";
+import { IsArray, isArray, IsDate, IsEnum, isNotEmpty, IsNotEmpty, IsNotEmptyObject, IsObject, IsOptional, IsString, MaxLength, MinLength, matches, Matches, IsJSON, IsUrl, IsISO8601, Validate, ValidateNested } from "class-validator";
+import { Type, Transform } from "class-transformer";
 import { PostType } from "../enums/postType.enum";
 import { PostStatus } from "../enums/status.enum";
-
+import { CreatePostMetaOptionsDto } from "./create-post-meta-options.dto";
 
 
 export class CreatePostDto{
@@ -19,12 +19,12 @@ export class CreatePostDto{
 
     @IsEnum(PostType)
     @IsNotEmpty()
-    @Type(() => Enumerator)
+    @Transform(({ value }) => PostType[value] || value)
     postType: PostType
 
     @IsEnum(PostStatus)
     @IsNotEmpty()
-    @Type(()=> Enumerator)
+    @Transform(({ value }) => PostStatus[value] || value)
     status: PostStatus
 
     @IsString()
@@ -42,23 +42,24 @@ export class CreatePostDto{
     @IsOptional()
     coverImageUrl?: string
 
+    @IsISO8601({ strict: true })
+    //@Type(() => Date)
     @IsOptional()
-    //@IsDate()
-    @IsISO8601({strict: true})
-    @Type(() => Date)
-    publishedOn: Date
+    publishedOn?: Date
 
-    @IsString({each:true})
+    @IsString({ each: true })
     @IsArray()
+    @MinLength(3, { each: true })
     //@IsNotEmpty()
     //@IsNotEmptyObject()
     @IsOptional()    
     @Type(() => Array<String>)
     tags?: string[]
     
-    @IsNotEmpty()
-    @IsObject()
+    @IsOptional()
     @IsArray()
-    @Type(() => Array<Object>)
-    metaOptions: [Object]
+    @IsObject({ each: true })
+    @ValidateNested({ each: true })
+    @Type(() =>  CreatePostMetaOptionsDto)
+    metaOptions: CreatePostMetaOptionsDto[]
 }
