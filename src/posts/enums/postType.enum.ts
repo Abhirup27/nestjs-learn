@@ -1,4 +1,7 @@
-
+/**
+ * Enum which stores/tells the type of post
+ * @enum {PostType}
+ */
 export enum PostType
 {
     POST = 'post',

@@ -1,4 +1,7 @@
-
+/**
+ * enum which tells the current state of a post.
+ * @enum {PostStatus}
+ */
 export enum PostStatus
 {
     DRAFT = 'draft',

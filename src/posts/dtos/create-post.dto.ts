@@ -5,9 +5,14 @@ import { PostStatus } from "../enums/status.enum";
 import { CreatePostMetaOptionsDto } from "./create-post-meta-options.dto";
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 
-
+/**
+ * A Data Transfer Object which is used to validate and transform the body of the POST request recieved at the /post route. Requests are denied if they include any key and value which are not defined here in this DTO.
+ */
 export class CreatePostDto{
 
+    /**
+     * A string holding the Title of the post, required.
+     */
     @ApiProperty({
         description: "This is the title for the blog post. Minimum 4 letters long.",
         example: "This is a title"
@@ -18,6 +23,9 @@ export class CreatePostDto{
     @MaxLength(250)
     title: string;
     
+    /**
+     * A string holding the body/ contents of the post.
+     */
     @ApiPropertyOptional(
         {
             description: "This is the content of the post.",
@@ -28,6 +36,10 @@ export class CreatePostDto{
     @IsOptional()
     content?: string;
 
+    /**
+     * An enum holding the type of post.
+     * @enum {PostType}
+     */
     @ApiProperty({
         enum: PostType,
         description: "Possible values: 'post', 'page','story', 'series'"
@@ -37,6 +49,10 @@ export class CreatePostDto{
     @Transform(({ value }) => PostType[value] || value)
     postType: PostType;
 
+    /**
+     * An enum holding the state of the post.
+     * @enum { PostStatus }
+     */
     @ApiProperty({
         enum: PostStatus,
         description: "Possible values: 'draft', 'scheduled', 'review', 'published'"
@@ -46,6 +62,9 @@ export class CreatePostDto{
     @Transform(({ value }) => PostStatus[value] || value)
     status: PostStatus;
 
+    /**
+     * A string holding the unique identifier of the post
+     */
     @ApiProperty({
         description: "A unique identifier for the resource. For e.g. : 'my-url'",
         example: "my-blog-post-123"
@@ -57,6 +76,9 @@ export class CreatePostDto{
     })
     slug: string;
 
+    /**
+     * A string which is a stringify json telling how the client/ user expects the format/structure/blueprint of the response to be in. 
+     */
     @ApiPropertyOptional(
         {
             description: "Serialize your JSON object.",
@@ -67,6 +89,9 @@ export class CreatePostDto{
     @IsOptional()
     schema?: string;
 
+    /**
+     * A string which is a URL of a CDN/ image, which will be used as the cover image for the post.
+     */
     @ApiPropertyOptional(
         {
             description: "The featured image for your blog post",
@@ -77,6 +102,9 @@ export class CreatePostDto{
     @IsOptional()
     coverImageUrl?: string;
 
+    /**
+     * A Date Object which accepts ISO8601 compliant Date format. Strict is set because it will check edge cases like 29th of February.
+     */
     @ApiPropertyOptional(
         {
             description: 'The date on which the blog post is published. Must be in ISO8601 format. <YYYY-MM-DD>T<HH:MM:SS><Timezone in UTC format>',
@@ -88,6 +116,9 @@ export class CreatePostDto{
     @IsOptional()
     publishedOn?: Date;
 
+    /**
+     * An Array of strings which holds the tags, which tell what the topic of the post is. The string gets converted to an actual array. 
+     */
     @ApiPropertyOptional(
         {
             description: "Array of tags passed as string values",
@@ -103,6 +134,9 @@ export class CreatePostDto{
     @Type(() => Array<String>)
     tags?: string[];
     
+    /**
+     * An array of type CreatePostMetaOptionsDto. It holds meta data about the post. These hold key value pairs which tells the client some information on the post, e.g. how the post has to be displayed.
+     */
     @ApiPropertyOptional(
         {
             type: 'array',

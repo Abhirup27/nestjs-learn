@@ -8,16 +8,29 @@ import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
     //     id: number
 // };
     
-
+/**
+ * A controller class which handles all the requests coming at the /users route.
+ */
 @Controller('users')
 @ApiTags('Users')
-export class UsersController { 
+export class UsersController {
+    /**
+     * 
+     * @param usersService 
+     */
     constructor(
         private readonly usersService: UsersService,
     
     ){ }
 
 
+    /**
+     * Returns all the registered user in the app. The parameter limit tells how many users to include in the response. The page parameter tells the offset from 0.
+     * @param getUserParamDto 
+     * @param limit 
+     * @param page 
+     * @returns 
+     */
     @Get('/:id?') //'/:id?/:option?'
     @ApiOperation({
             summary: "Fetches a list of registered users in the application."
@@ -51,6 +64,13 @@ export class UsersController {
         return this.usersService.findAll(getUserParamDto, limit, page);
     }
 
+    /**
+     * This function is used to register a new user.
+     * @param createUserDto 
+     * @param headers 
+     * @param ip 
+     * @returns 
+     */
     @Post()
     public createUser(
         @Body(new ValidationPipe({whitelist: true ,forbidNonWhitelisted:true, transform: true})) createUserDto: CreateUserDto, // we can remove new ValidationPipe from here because we added a global ValidationPipe in main.ts
@@ -66,6 +86,11 @@ export class UsersController {
         return 'sent a POST request to /users endpoint to create an user.';
     }
 
+    /**
+     * This function is used to update the information of an existing user.
+     * @param patchUserDto 
+     * @returns 
+     */
     @Patch()
     public patchUser(@Body() patchUserDto: PatchUserDto)
     {
