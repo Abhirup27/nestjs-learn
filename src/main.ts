@@ -2,11 +2,24 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-
+import { createDatabase } from 'typeorm-extension';
+import { DataSourceOptions } from 'typeorm';
 /**
  * This function initializes the NestJS app, can be named anything other than bootstrap. 
  */
 async function bootstrap() {
+
+   const options: DataSourceOptions = {
+        type: 'postgres',
+     database: 'nestjs-app',
+     username: 'postgres',
+     password: 'ab',
+     
+  };
+    await createDatabase({
+      options,
+      ifNotExist:true
+    });
   /**
    * The NestFactory class creates an instance of the entry point of the application,in most cases it is AppModule. 
    */
@@ -23,6 +36,7 @@ async function bootstrap() {
       transform: true
     })
   );
+  
 
   /**
  * swagger configuration
